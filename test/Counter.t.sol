@@ -8,7 +8,7 @@ contract CounterTest is Test {
     Counter public counter;
 
     function setUp() public {
-        counter = new Counter();
+        counter = new Counter(5);
         counter.setNumber(0);
     }
 
