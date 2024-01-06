@@ -14,9 +14,9 @@ import {ERC1967Proxy} from "../src/ERC1967Proxy.sol";
  * @notice ERC20 implementation is deployed normally, UUPS using create3.
  */
 contract DeployExampleUUPSProxy is Script, CreateXScript {
-    function setUp() public {
+    function setUp() public withCreateX {
         //
-        // Check there is a CreateX factory deployed
+        // `withCreateX` modifier checks there is a CreateX factory deployed
         // If not, etch it when running within a Forge testing environment (chainID = 31337)
         //
         // This sets `CreateX` for the scripting usage with functions:
@@ -31,7 +31,6 @@ contract DeployExampleUUPSProxy is Script, CreateXScript {
         // Behaviour towards external RPCs - this works as expected, i.e. continues if CreateX is deployed
         // and stops when not. (Tested with Tenderly devnets and BuildBear private testnets)
         //
-        setUpCreateXFactory();
     }
 
     function run() public {

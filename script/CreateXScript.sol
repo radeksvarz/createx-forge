@@ -15,6 +15,14 @@ abstract contract CreateXScript is Script {
     ICreateX internal constant CreateX = ICreateX(CREATEX_ADDRESS);
 
     /**
+     * Modifier for the `setUp()` function
+     */
+    modifier withCreateX() {
+        setUpCreateXFactory();
+        _;
+    }
+
+    /**
      * @notice Check whether CreateX factory is deployed
      * If not, deploy when running within Forge internal testing VM (chainID 31337)
      */
@@ -45,7 +53,13 @@ abstract contract CreateXScript is Script {
         // CreateX runtime code is not deployed, non existent account
         if (extCodeHash == 0) return false;
 
-        revert("\u001b[91m Some other contract is deployed to the CreateX address! \u001b[0m");
+        // forgefmt: disable-start
+        revert(string(abi.encodePacked("\n\n\u001b[91m"
+            "\u256d\u2500\u2500\u2500\u2500\u2504\u2508\n"
+            "\u2502 \u26a0 Warning! Some other contract is deployed to the CreateX address!\n"
+            "\u250a On the chain ID: ", vm.toString(block.chainid), 
+            "\u001b[0m")));
+        // forgefmt: disable-end
     }
 
     /**
