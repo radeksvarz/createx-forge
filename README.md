@@ -4,9 +4,7 @@ This package allows the use of the fantastic [`CreateX`](https://github.com/pcav
 
 The goal of this repository is to provide CreateX factory in a lean and practical way.
 
-In general, the script checks if CreateX factory is already deployed on the chain.
-
-If not, it will etch (deploy) it when running within a Forge test environment (chainID = 31337), making it easier to write and debug deployment solidity scripts.
+In general, the script checks if CreateX factory is already deployed on the chain. If not, it will etch (deploy) it when running within a Forge test environment (chainID = 31337), making it easier to write and debug deployment solidity scripts.
 
 It sets the `CreateX` object for scripting use with the functions described in: https://github.com/pcaversaccio/createx#available-versatile-functions
 
@@ -56,7 +54,15 @@ And use within the `run()` part:
 
 _Note: Inheritance from Forge's `Script` is optional, as it is already inherited by `CreateXScript`._
 
-**See these deployment script examples for more details:**
+### Ouput when running deployment script during development
+
+![](./assets/forge_dev_env_etched.png)
+
+### Ouput when running deployment script towards public chains
+
+![](./assets/createx_already_deployed_short.png)
+
+### See these deployment script examples for more details
 
 - [`Deployment example`](./script/DeployExampleCounter.s.sol) of the basic Counter contract
 - [`Deployment example`](./script/DeployExampleUUPSProxy.s.sol) of the combo - UUPS Proxy with ERC20 implementation
@@ -92,9 +98,26 @@ The CreateX-Forge package is much smaller with minimal dependencies.
 ## Detection does not work with explicit local Anvil
 
 > [!WARNING] Etching (deploying non existent factory) is not supported towards local explicit Anvil execution with default chainID 31337
+>
 > This leads to a strange behaviour towards Anvil when Anvil does not have CreateX predeployed (seamingly correct transactions in the forge simulation even when broadcasted).
 
 Start Anvil with a different chainID, e.g. `anvil --chain-id 1982` to simulate a correct behaviour of missing CreateX.
+
+## What if the CreateX is not deployed on the target chain?
+
+This will be the output:
+
+![](./assets/error_cannot_be_etched.png)
+
+Please, follow the instructions on the CreateX github for the new deployments: https://github.com/pcaversaccio/createx#new-deployments
+
+## What if these is some other contract deployed on the CreateX address?
+
+This is very unlikely - see the discussion: https://github.com/pcaversaccio/createx/discussions/61#discussioncomment-7937359
+
+The script would produce this output:
+
+![](./assets/error_other_contract.png)
 
 # Development
 
