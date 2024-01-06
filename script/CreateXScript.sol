@@ -21,9 +21,9 @@ abstract contract CreateXScript is Script {
     function setUpCreateXFactory() internal {
         if (!isCreateXDeployed()) {
             deployCreateX();
-            if (!isCreateXDeployed()) revert("Could not deploy CreateX!");
+            if (!isCreateXDeployed()) revert("\u001b[91m Could not deploy CreateX! \u001b[0m");
         } else {
-            console2.log("CreateX already deployed on chain:", block.chainid);
+            console2.log("\u001b[92m\u2714 CreateX already deployed on chain:", block.chainid, "\u001b[0m");
         }
 
         vm.label(CREATEX_ADDRESS, "CreateX");
@@ -45,7 +45,7 @@ abstract contract CreateXScript is Script {
         // CreateX runtime code is not deployed, non existent account
         if (extCodeHash == 0) return false;
 
-        revert("Some other contract is deployed to the CreateX address!");
+        revert("\u001b[91m Some other contract is deployed to the CreateX address! \u001b[0m");
     }
 
     /**
@@ -53,9 +53,15 @@ abstract contract CreateXScript is Script {
      */
     function deployCreateX() internal {
         if (block.chainid != 31337) {
-            revert("CreateX not pre-deployed. \nNot on local dev env, CreateX cannot be deployed!");
+            revert(string(abi.encodePacked("\n\n\u001b[91m"
+                "\u256d\u2500\u2500\u2500\u2500\u2504\u2508\n"
+                "\u2502 CreateX is not deployed on this chain ID: ", 
+                vm.toString(block.chainid),"\n" 
+                "\u250a Not on local dev env, CreateX cannot be etched! \n"
+                "\u001b[0m")));
         }
-        console2.log("Etching missing CreateX on chain:", block.chainid);
+
+        console2.log("\u2692 Etching missing CreateX on chain:", block.chainid);
         vm.etch(CREATEX_ADDRESS, CREATEX_BYTECODE);
     }
 

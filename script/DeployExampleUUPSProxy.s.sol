@@ -51,6 +51,8 @@ contract DeployExampleUUPSProxy is Script, CreateXScript {
         //
         MockERC20 implementation = new MockERC20();
 
+        console2.log("Implementation deployed address:", address(implementation));
+
         // Demo to show handling of initialization arguments
         string memory name = "My Token";
         string memory symbol = "MTKN";
@@ -72,7 +74,7 @@ contract DeployExampleUUPSProxy is Script, CreateXScript {
         // Calculate the predetermined address of the Counter contract deployment
         address computedAddress = computeCreate3Address(salt, deployer);
 
-        console2.log("Computed contract address:", computedAddress);
+        console2.log("Proxy computed contract address:", computedAddress);
 
         //
         // Example of the CREATE3 deployment
@@ -82,7 +84,7 @@ contract DeployExampleUUPSProxy is Script, CreateXScript {
             abi.encodePacked(type(ERC1967Proxy).creationCode, abi.encode(implementation, implementationInitializeData))
         );
 
-        console2.log("Deployed contract address:", deployedAddress);
+        console2.log("Proxy deployed contract address:", deployedAddress);
 
         // Check to make sure contract is on the expected address
         require(computedAddress == deployedAddress, "Computed and deployed address do not match!");
