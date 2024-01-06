@@ -26,7 +26,7 @@ abstract contract CreateXScript is Script {
             console2.log("CreateX already deployed on chain:", block.chainid);
         }
 
-       vm.label(CREATEX_ADDRESS, "CreateX");
+        vm.label(CREATEX_ADDRESS, "CreateX");
     }
 
     /**
