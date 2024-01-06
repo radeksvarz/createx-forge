@@ -52,6 +52,7 @@ abstract contract CreateXScript is Script {
      * @notice Deploys CreateX factory if running within a local dev env
      */
     function deployCreateX() internal {
+        // forgefmt: disable-start
         if (block.chainid != 31337) {
             revert(string(abi.encodePacked("\n\n\u001b[91m"
                 "\u256d\u2500\u2500\u2500\u2500\u2504\u2508\n"
@@ -60,6 +61,7 @@ abstract contract CreateXScript is Script {
                 "\u250a Not on local dev env, CreateX cannot be etched! \n"
                 "\u001b[0m")));
         }
+        // forgefmt: disable-end
 
         console2.log("\u2692 Etching missing CreateX on chain:", block.chainid);
         vm.etch(CREATEX_ADDRESS, CREATEX_BYTECODE);
@@ -78,6 +80,9 @@ abstract contract CreateXScript is Script {
         return CreateX.computeCreate3Address(guardedSalt, CREATEX_ADDRESS);
     }
 
+    /**
+     * @notice Deploys the contract via CREATE3
+     */
     function create3(bytes32 salt, bytes memory initCode) public returns (address) {
         return CreateX.deployCreate3(salt, initCode);
     }
