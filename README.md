@@ -67,6 +67,30 @@ _Note: Inheritance from Forge's `Script` is optional, as it is already inherited
 - [`Deployment example`](./script/DeployExampleCounter.s.sol) of the basic Counter contract
 - [`Deployment example`](./script/DeployExampleUUPSProxy.s.sol) of the combo - UUPS Proxy with ERC20 implementation
 
+# How to use it with local Anvil
+
+**Start Anvil with custom chain-id**
+
+```bash
+anvil --chain-id 1982
+```
+
+_Why? See the detection issue below._
+
+**Etch code to local anvil instance:**
+
+```bash
+cast rpc anvil_setCode 0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed 0x$(grep -oP '(?<=hex")[0-9a-fA-F]+(?=")' lib/createx-forge/script/CreateX.d.sol)
+```
+
+**Test manually that a local anvil has the factory deployed:**
+
+```bash
+cast keccak $(cast code 0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed) | grep -q "0xbd8a7ea8cfca7b4e5f5041d7d4b17bc317c5ce42cfbc42066a00cf26b43eb53f" && echo "Welcome Mr. Anderson. (CREATE3 deployed, hash: 0xba5Ed099633D3B313e4D5F7bdc1305d3c28ba5Ed)" || echo "CREATE3 not deployed - (Follow the white rabbit)"
+```
+
+> Enjoy testing your CREATE3 deploy scripts with local Anvil
+
 # FAQ
 
 ## Why this package?
