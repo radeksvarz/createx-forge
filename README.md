@@ -8,6 +8,10 @@ In general, the script checks if CreateX factory is already deployed on the chai
 
 It sets the `CreateX` object for scripting use with the functions described in: https://github.com/pcaversaccio/createx#available-versatile-functions
 
+#### Deep wiki documentation with graphs and AI consultant
+
+https://deepwiki.com/radeksvarz/createx-forge
+
 # How to use
 
 Install into your initiated Foundry project like any other dependency:
